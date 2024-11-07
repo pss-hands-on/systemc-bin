@@ -10,12 +10,13 @@ if test "x${TARGET}" = "x"; then
     TARGET=linux
 fi
 
-systemc_version=3.0.1
+systemc_version=3.2.4
 systemc_tgz=${cwd}/3.0.1.tar.gz
-systemc_dir=${cwd}/systemc-3.0.1
+systemc_dir=${cwd}/systemc-${systemc_version}
 
 if test ! -f ${systemc_tgz}; then
-    wget https://github.com/accellera-official/systemc/archive/refs/tags/3.0.1.tar.gz
+#    wget https://github.com/accellera-official/systemc/archive/refs/tags/3.0.1.tar.gz
+    wget https://github.com/accellera-official/systemc/archive/refs/tags/2.3.4.tar.gz
     if test $? -ne 0; then exit 1; fi
 fi
 
