@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    # Every Sunday at 12PM UTC
+    - cron: "0 12 * * 0"
+
+jobs:
+    ci-linux:
+        runs-on: 'ubuntu-latest'
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build packages
+              env:
+                BUILD_NUM: ${{ github.run_id }}
+                CONTAINER: 1
+                TARGET: manylinux2014
+              run: >
+                docker run --rm
+                --volume "$(pwd):/io"
+                --env CONTAINER
+                --env BUILD_NUM
+                --env TARGET
+                --workdir /io
+                quay.io/pypa/manylinux2014_x86_64
+                /io/scripts/build_linux.sh
+            - name: Create Release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+              with:
+                tag_name: 3.0.1
+                release_name: "Release SystemC 3.0.1"
+                body: |
+                  Build of SystemC
+                draft: false
+                prerelease: false
+            - name: Upload Files
+              uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: "./systemc-manylinux2014-3.0.1.tar.gz"
+                asset_name: "systemc-maylinux2014-3.0.1.tar.gz"
+                asset_content_type: application/gzip
+
+
+
