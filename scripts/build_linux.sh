@@ -11,7 +11,7 @@ if test "x${TARGET}" = "x"; then
 fi
 
 systemc_version=3.2.4
-systemc_tgz=${cwd}/3.0.1.tar.gz
+systemc_tgz=${cwd}/${systemc_version}.tar.gz
 systemc_dir=${cwd}/systemc-${systemc_version}
 
 if test ! -f ${systemc_tgz}; then
