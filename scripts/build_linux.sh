@@ -10,7 +10,7 @@ if test "x${TARGET}" = "x"; then
     TARGET=linux
 fi
 
-systemc_version=3.2.4
+systemc_version=2.3.4
 systemc_tgz=${cwd}/${systemc_version}.tar.gz
 systemc_dir=${cwd}/systemc-${systemc_version}
 
