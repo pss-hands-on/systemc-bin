@@ -35,7 +35,9 @@ touch docs/DEVELOPMENT.md
 #autoconf
 #if test $? -ne 0; then exit 1; fi
 
-./configure --prefix=${cwd}/systemc-${TARGET}-${systemc_version}
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${cwd}/systemc-${TARGET}-${systemc_version}
 if test $? -ne 0; then exit 1; fi
 
 make -j$(nproc)
